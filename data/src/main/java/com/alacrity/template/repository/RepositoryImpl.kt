@@ -1,46 +1,32 @@
 package com.alacrity.template.repository
 
 import com.alacrity.template.api.Api
-import com.alacrity.template.entity.NumberWithFact
-import com.alacrity.template.exceptions.NoDataFromResponseException
-import java.util.*
+import com.alacrity.template.entity.ApiResponse
+import com.alacrity.template.exceptions.TemplateException
+import com.alacrity.template.retrofit.NetworkResponse
 import javax.inject.Inject
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
+import timber.log.Timber
 
 class RepositoryImpl @Inject constructor(
-    private val retrofit: Retrofit,
+    private val api: Api
 ) : Repository {
 
-    override suspend fun getFact(number: Int): NumberWithFact {
-        val api = retrofit.create(Api::class.java)
-        val call = api.getFactAboutNumber(number)
-        return suspendCoroutine { continuation ->
-            call.enqueue(object : Callback<ResponseBody> {
-                override fun onResponse(
-                    call: Call<ResponseBody>,
-                    response: Response<ResponseBody>
-                ) {
-                    val data = response.body()?.string()
-                    data ?: continuation.resumeWithException(NoDataFromResponseException())
-                        .also { return }
-
-                    val uid = UUID.randomUUID().toString()
-                    continuation.resume(
-                        NumberWithFact(uid, number, data!!)
-                    )
-                }
-
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    continuation.resumeWithException(t)
-                }
-            })
+    override suspend fun getResponse(number: Int): ApiResponse {
+        when (val call = api.getFactAboutNumber(number)) {
+            is NetworkResponse.Success -> {
+                val data = call.body
+                Timber.d("data $data")
+                return call.body
+            }
+            is NetworkResponse.ApiError -> {
+                throw TemplateException("Api error")
+            }
+            is NetworkResponse.NetworkError -> {
+                throw TemplateException("Network error")
+            }
+            is NetworkResponse.UnknownError -> {
+                throw TemplateException("Unknown error")
+            }
         }
     }
 

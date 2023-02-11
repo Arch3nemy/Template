@@ -1,7 +1,7 @@
 package com.alacrity.template.ui.main
 
 import com.alacrity.template.ui.main.models.MainEvent
-import com.alacrity.template.use_cases.GetFactAboutNumberUseCase
+import com.alacrity.template.use_cases.GetSimpleResponseUseCase
 import com.alacrity.template.util.BaseViewModel
 import com.alacrity.template.view_states.MainViewState
 import com.alacrity.template.view_states.MainViewState.*
@@ -10,7 +10,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-    private val getFactAboutNumberUseCase: GetFactAboutNumberUseCase
+    private val getSimpleResponseUseCase: GetSimpleResponseUseCase
 ) : BaseViewModel<MainEvent, MainViewState>(Loading) {
 
     val viewState: StateFlow<MainViewState> = _viewState
@@ -33,7 +33,7 @@ class MainViewModel @Inject constructor(
         logReduce(event)
         when (event) {
             MainEvent.EnterScreen -> {
-                getFactAboutNumber(4)
+                getSimpleResponse(1)
             }
             else -> Unit
         }
@@ -59,13 +59,13 @@ class MainViewModel @Inject constructor(
 
     }
 
-    private fun getFactAboutNumber(number: Int) {
+    private fun getSimpleResponse(param: Int) {
         launch(
-            logError = "Error Getting Fact about number $number",
-            logSuccess = "Successfully received fact about number $number",
+            logError = "Error Getting response for param $param",
+            logSuccess = "Successfully received response for param $param",
             onSuccess = {
                 _viewState.value = FinishedLoading(it).also {
-                    Timber.d("fact ${it.numberWithFact.fact}")
+                    Timber.d("response title ${it.apiResponse.title}")
                 }
             },
             onFailure = {
@@ -74,8 +74,9 @@ class MainViewModel @Inject constructor(
                 }
             }
         ) {
-            getFactAboutNumberUseCase(number)
+            getSimpleResponseUseCase(param)
         }
+
     }
 
 }

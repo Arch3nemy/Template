@@ -11,6 +11,7 @@ object Versions {
 
     //android
     const val gradle = "7.4.2"
+    const val buildTools = "7.4.1"
     const val toolsGradle = "7.2.2"
     const val appcompat = "1.7.0-alpha01"
     const val material = "1.8.0-alpha02"
@@ -47,5 +48,15 @@ object Versions {
 
     //other
     const val gson = "2.10"
+
+    //klaxon serializer
+    const val klaxon = "5.5"
+
+    //moshi json
+    const val moshiCodGen = "1.9.2"
+
+    const val moshi = "1.12.0"
+
+    const val moshiConverter = "2.4.0"
 
 }

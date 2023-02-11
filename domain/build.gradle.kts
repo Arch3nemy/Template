@@ -30,4 +30,6 @@ fun DependencyHandlerScope.async() {
 fun DependencyHandlerScope.retrofit() {
     implementation(Dependencies.retrofit.retrofit)
     implementation(Dependencies.retrofit.gson)
+    implementation(Dependencies.other.moshi)
 }
+

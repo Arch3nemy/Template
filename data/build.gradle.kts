@@ -1,6 +1,8 @@
 plugins {
     id("com.android.library")
-    id("kotlin-android")
+    id ("kotlin-parcelize")
+    id("org.jetbrains.kotlin.android")
+    kotlin("kapt")
 }
 
 android {
@@ -33,7 +35,11 @@ android {
 
 dependencies {
     implementation(project(":domain"))
+    implementation("androidx.core:core-ktx:1.9.0")
     retrofit()
+    klaxon()
+    moshi()
+    room()
 }
 
 fun DependencyHandlerScope.retrofit() {
@@ -41,3 +47,19 @@ fun DependencyHandlerScope.retrofit() {
     implementation(Dependencies.retrofit.gson)
     implementation(Dependencies.retrofit.gsonConverter)
 }
+
+fun DependencyHandlerScope.room() {
+    implementation(Dependencies.room.runtime)
+    kapt(Dependencies.room.compiler)
+    implementation(Dependencies.room.ktx)
+}
+
+fun DependencyHandlerScope.klaxon() {
+    implementation(Dependencies.other.klaxon)
+    implementation(Dependencies.other.timber)
+}
+
+fun DependencyHandlerScope.moshi() {
+    implementation(Dependencies.other.moshi)
+}
+

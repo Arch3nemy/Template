@@ -11,18 +11,10 @@ class App : Application() {
 
     companion object {
 
+        const val TARGET_URL = "https://jsonplaceholder.typicode.com/"
+
         lateinit var appComponent: AppComponent
 
-        /*var detailComponent: DetailComponent? = null
-            get() {
-                if (field == null) field = appComponent.provideDetailComponent()
-                return field
-            }
-
-
-        fun clearDetailComponent() {
-            detailComponent = null
-        }*/
     }
 
     override fun onCreate() {
@@ -31,9 +23,10 @@ class App : Application() {
 
         appComponent = DaggerAppComponent
             .builder()
-            .apiModule(ApiModule("http://numbersapi.com/"))
+            .apiModule(ApiModule(TARGET_URL))
             .appModule(AppModule(this))
             .build()
             .apply { inject(this@App) }
     }
+
 }

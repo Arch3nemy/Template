@@ -40,6 +40,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
@@ -105,5 +108,9 @@ fun DependencyHandlerScope.retrofit() {
     implementation(Dependencies.retrofit.retrofit)
     implementation(Dependencies.retrofit.gson)
     implementation(Dependencies.retrofit.gsonConverter)
+    implementation(Dependencies.other.moshi)
+    implementation(Dependencies.other.moshiConverter)
+    implementation(Dependencies.other.moshiKotlin)
+    kapt(Dependencies.other.moshiCodGen)
 }
 

@@ -1,7 +1,7 @@
 package com.alacrity.template.di
 
-import com.alacrity.template.use_cases.GetFactAboutNumberUseCase
-import com.alacrity.template.use_cases.GetFactAboutNumberUseCaseImpl
+import com.alacrity.template.use_cases.GetSimpleResponseUseCase
+import com.alacrity.template.use_cases.GetSimpleResponseUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import javax.inject.Singleton
@@ -11,6 +11,6 @@ interface UseCaseModule {
 
     @Binds
     @Singleton
-    fun bindNewMessageReceivedUseCase(impl: GetFactAboutNumberUseCaseImpl): GetFactAboutNumberUseCase
+    fun bindNewMessageReceivedUseCase(impl: GetSimpleResponseUseCaseImpl): GetSimpleResponseUseCase
 
 }

@@ -1,9 +1,9 @@
 package com.alacrity.template.repository
 
-import com.alacrity.template.entity.NumberWithFact
+import com.alacrity.template.entity.ApiResponse
 
 interface Repository {
 
-    suspend fun getFact(number: Int): NumberWithFact
+    suspend fun getResponse(number: Int): ApiResponse
 
 }

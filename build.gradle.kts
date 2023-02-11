@@ -5,9 +5,10 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:${Versions.toolsGradle}")
+        classpath(Dependencies.other.buildTools)
+
         //Actual kotlin version
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}")
+        classpath(Dependencies.other.kotlinCore)
     }
 }
 

@@ -15,10 +15,6 @@ import com.alacrity.template.theme.AppTheme
 import com.alacrity.template.ui.main.MainViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
-object Destinations {
-    const val HOME_ROUTE = "home"
-}
-
 @Composable
 fun TemplateApp(
     context: Context,
@@ -39,7 +35,7 @@ fun TemplateApp(
 
 }
 
-
+//Navigation Drawer
 fun customShape(screenWidth: Float, screenHeight: Float) = object : Shape {
     override fun createOutline(
         size: Size,
