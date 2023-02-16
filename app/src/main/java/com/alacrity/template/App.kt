@@ -9,13 +9,6 @@ import timber.log.Timber
 
 class App : Application() {
 
-    companion object {
-
-        const val TARGET_URL = "https://jsonplaceholder.typicode.com/"
-
-        lateinit var appComponent: AppComponent
-
-    }
 
     override fun onCreate() {
         super.onCreate()
@@ -23,10 +16,13 @@ class App : Application() {
 
         appComponent = DaggerAppComponent
             .builder()
-            .apiModule(ApiModule(TARGET_URL))
+            .apiModule(ApiModule(BuildConfig.BASE_URL))
             .appModule(AppModule(this))
             .build()
             .apply { inject(this@App) }
+    }
+    companion object {
+        lateinit var appComponent: AppComponent
     }
 
 }
