@@ -10,7 +10,6 @@ import javax.inject.Singleton
 interface UseCaseModule {
 
     @Binds
-    @Singleton
     fun bindNewMessageReceivedUseCase(impl: GetSimpleResponseUseCaseImpl): GetSimpleResponseUseCase
 
 }
