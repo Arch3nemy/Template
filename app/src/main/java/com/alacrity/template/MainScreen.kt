@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alacrity.template.theme.TemplateTypography
 import com.alacrity.template.ui.main.MainViewModel
 import com.alacrity.template.ui.main.models.enterScreen
@@ -20,7 +21,7 @@ fun MainScreen(
     viewModel: MainViewModel,
 ) {
 
-    val state by viewModel.viewState.collectAsState()
+    val state by viewModel.viewState.collectAsStateWithLifecycle()
 
     when (state) {
         MainViewState.Loading -> {

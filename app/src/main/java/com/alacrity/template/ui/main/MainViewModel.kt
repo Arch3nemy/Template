@@ -4,9 +4,13 @@ import com.alacrity.template.ui.main.models.MainEvent
 import com.alacrity.template.use_cases.GetSimpleResponseUseCase
 import com.alacrity.template.util.BaseViewModel
 import com.alacrity.template.view_states.MainViewState
-import com.alacrity.template.view_states.MainViewState.*
+import com.alacrity.template.view_states.MainViewState.Error
+import com.alacrity.template.view_states.MainViewState.FinishedLoading
+import com.alacrity.template.view_states.MainViewState.Loading
+import com.alacrity.template.view_states.MainViewState.NoItems
+import com.alacrity.template.view_states.MainViewState.Refreshing
 import kotlinx.coroutines.flow.StateFlow
-import timber.log.Timber
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
@@ -25,17 +29,12 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun lal() {
-
-    }
-
     private fun Loading.reduce(event: MainEvent) {
         logReduce(event)
         when (event) {
             MainEvent.EnterScreen -> {
                 getSimpleResponse(1)
             }
-            else -> Unit
         }
     }
 
@@ -63,15 +62,11 @@ class MainViewModel @Inject constructor(
         launch(
             logError = "Error Getting response for param $param",
             logSuccess = "Successfully received response for param $param",
-            onSuccess = {
-                _viewState.value = FinishedLoading(it).also {
-                    Timber.d("response title ${it.apiResponse.title}")
-                }
+            onSuccess = { response ->
+                _viewState.update { FinishedLoading(response) }
             },
-            onFailure = {
-                _viewState.value = Error(it).also {
-                    Timber.d("Error:: $it")
-                }
+            onFailure = { exception ->
+                _viewState.update { Error(exception) }
             }
         ) {
             getSimpleResponseUseCase(param)

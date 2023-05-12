@@ -6,13 +6,17 @@ plugins {
 }
 
 android {
+    namespace = "com.alacrity.template.data"
     compileSdk = Dependencies.android.compileSdk
     buildToolsVersion = Dependencies.android.buildTools
 
     defaultConfig {
         minSdk = Android.minSdk
-        targetSdk = Android.targetSdk
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {
@@ -25,23 +29,25 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 }
 
 dependencies {
     implementation(project(":domain"))
-    implementation("androidx.core:core-ktx:1.9.0")
+    core()
     retrofit()
     klaxon()
     moshi()
     room()
 }
-
+fun DependencyHandlerScope.core() {
+    implementation(Dependencies.other.ktxCore)
+}
 fun DependencyHandlerScope.retrofit() {
     implementation(Dependencies.retrofit.retrofit)
     implementation(Dependencies.retrofit.gson)

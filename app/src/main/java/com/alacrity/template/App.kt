@@ -16,7 +16,7 @@ class App : Application() {
 
         appComponent = DaggerAppComponent
             .builder()
-            .apiModule(ApiModule(BuildConfig.BASE_URL))
+            .apiModule(ApiModule(com.alacrity.template.app.BuildConfig.BASE_URL))
             .appModule(AppModule(this))
             .build()
             .apply { inject(this@App) }
