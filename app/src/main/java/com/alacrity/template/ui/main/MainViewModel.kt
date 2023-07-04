@@ -9,10 +9,12 @@ import com.alacrity.template.view_states.MainViewState.FinishedLoading
 import com.alacrity.template.view_states.MainViewState.Loading
 import com.alacrity.template.view_states.MainViewState.NoItems
 import com.alacrity.template.view_states.MainViewState.Refreshing
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
+@HiltViewModel
 class MainViewModel @Inject constructor(
     private val getSimpleResponseUseCase: GetSimpleResponseUseCase
 ) : BaseViewModel<MainEvent, MainViewState>(Loading) {

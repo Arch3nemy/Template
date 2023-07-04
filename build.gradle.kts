@@ -9,6 +9,8 @@ buildscript {
 
         //Actual kotlin version
         classpath(Dependencies.other.kotlinCore)
+
+        classpath(Dependencies.di.daggerHilt)
     }
 }
 

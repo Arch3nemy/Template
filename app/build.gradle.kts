@@ -1,5 +1,6 @@
 plugins {
     id("com.android.application")
+    id("dagger.hilt.android.plugin")
     kotlin("android")
     kotlin("kapt")
 }
@@ -81,8 +82,8 @@ fun DependencyHandlerScope.room() {
 }
 
 fun DependencyHandlerScope.di() {
-    implementation(Dependencies.di.dagger2)
-    kapt(Dependencies.di.dagger2compiler)
+    implementation(Dependencies.di.dagger)
+    kapt(Dependencies.di.daggerCompiler)
 }
 
 fun DependencyHandlerScope.imageLoading() {

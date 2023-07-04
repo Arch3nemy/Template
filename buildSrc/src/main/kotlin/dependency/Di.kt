@@ -1,8 +1,7 @@
 @file:Suppress("unused")
 
 object Di {
-    const val javaxInject = "javax.inject:javax.inject:${Versions.javaxInject}"
-    const val dagger2 = "com.google.dagger:dagger:${Versions.dagger}"
-    const val dagger2compiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
-
+    const val dagger = "com.google.dagger:hilt-android:${Versions.dagger}"
+    const val daggerCompiler = "com.google.dagger:hilt-android-compiler:${Versions.dagger}"
+    const val daggerHilt = "com.google.dagger:hilt-android-gradle-plugin:${Versions.dagger}"
 }

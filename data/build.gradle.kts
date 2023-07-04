@@ -39,11 +39,12 @@ android {
 
 dependencies {
     implementation(project(":domain"))
-    core()
     retrofit()
     klaxon()
     moshi()
+    core()
     room()
+    di()
 }
 fun DependencyHandlerScope.core() {
     implementation(Dependencies.other.ktxCore)
@@ -52,6 +53,10 @@ fun DependencyHandlerScope.retrofit() {
     implementation(Dependencies.retrofit.retrofit)
     implementation(Dependencies.retrofit.gson)
     implementation(Dependencies.retrofit.gsonConverter)
+}
+
+fun DependencyHandlerScope.di() {
+    implementation(Dependencies.di.dagger)
 }
 
 fun DependencyHandlerScope.room() {

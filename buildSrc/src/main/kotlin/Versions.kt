@@ -25,7 +25,7 @@ object Versions {
 
     // di
     const val javaxInject = "1"
-    const val dagger = "2.46"
+    const val dagger = "2.46.1"
 
     // logging
     const val timber = "5.0.1"

@@ -4,8 +4,8 @@ import com.alacrity.template.api.Api
 import com.alacrity.template.entity.ApiResponse
 import com.alacrity.template.exceptions.TemplateException
 import com.alacrity.template.retrofit.NetworkResponse
-import javax.inject.Inject
 import timber.log.Timber
+import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
     private val api: Api

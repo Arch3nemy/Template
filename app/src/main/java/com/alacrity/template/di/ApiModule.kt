@@ -2,6 +2,7 @@ package com.alacrity.template.di
 
 import android.app.Application
 import com.alacrity.template.api.Api
+import com.alacrity.template.app.BuildConfig
 import com.alacrity.template.retrofit.ExceptionAdapter
 import com.alacrity.template.retrofit.NetworkResponseAdapterFactory
 import com.google.gson.FieldNamingPolicy
@@ -11,6 +12,8 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -18,7 +21,10 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 @Module
-class ApiModule(private val url: String) {
+@InstallIn(SingletonComponent::class)
+class ApiModule {
+
+    private val url: String = BuildConfig.BASE_URL
 
     @Provides
     @Singleton

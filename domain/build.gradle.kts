@@ -11,17 +11,12 @@ java {
 
 dependencies {
     core()
-    di()
     async()
     retrofit()
 }
 
 fun DependencyHandlerScope.core() {
     implementation(Dependencies.other.kotlin)
-}
-
-fun DependencyHandlerScope.di() {
-    api(Dependencies.di.javaxInject)
 }
 
 fun DependencyHandlerScope.async() {

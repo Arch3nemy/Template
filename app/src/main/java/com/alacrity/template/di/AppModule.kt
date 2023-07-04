@@ -4,16 +4,19 @@ import android.content.Context
 import android.content.res.Resources
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 
 @Module
-class AppModule(private val context: Context) {
+@InstallIn(SingletonComponent::class)
+class AppModule {
 
     @Provides
-    @Singleton
-    fun provideContext(): Context = context.applicationContext
+    fun provideContext(@ApplicationContext context: Context): Context = context
+
 
     @Provides
-    fun provideResources(): Resources = context.resources
+    fun provideResources(@ApplicationContext context: Context): Resources = context.resources
 
 }

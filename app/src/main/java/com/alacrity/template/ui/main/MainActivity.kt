@@ -2,19 +2,19 @@ package com.alacrity.template.ui.main
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.alacrity.template.App
 import com.alacrity.template.TemplateApp
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class MainActivity: AppCompatActivity() {
 
-    @Inject
-    lateinit var mainViewModel: MainViewModel
+    private val mainViewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        App.appComponent.inject(this)
         setContent {
             TemplateApp(context = this, homeViewModel = mainViewModel)
         }

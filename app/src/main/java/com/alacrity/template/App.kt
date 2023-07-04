@@ -1,28 +1,15 @@
 package com.alacrity.template
 
 import android.app.Application
-import com.alacrity.template.di.ApiModule
-import com.alacrity.template.di.AppComponent
-import com.alacrity.template.di.AppModule
-import com.alacrity.template.di.DaggerAppComponent
+import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
+@HiltAndroidApp
 class App : Application() {
-
 
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
-
-        appComponent = DaggerAppComponent
-            .builder()
-            .apiModule(ApiModule(com.alacrity.template.app.BuildConfig.BASE_URL))
-            .appModule(AppModule(this))
-            .build()
-            .apply { inject(this@App) }
-    }
-    companion object {
-        lateinit var appComponent: AppComponent
     }
 
 }
