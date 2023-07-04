@@ -4,19 +4,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alacrity.template.BaseEvent
 import com.alacrity.template.EventHandler
-import com.alacrity.template.exceptions.TemplateException
 import com.alacrity.template.view_states.BaseViewState
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import timber.log.Timber
 
-@Suppress("UNCHECKED_CAST")
 abstract class BaseViewModel<T : BaseEvent, V: BaseViewState>(defaultViewState: V) : ViewModel(), EventHandler<T> {
 
     protected val _viewState: MutableStateFlow<V> = MutableStateFlow(defaultViewState)
 
-    protected fun <T> launch(
+    fun <T> launch(
         dispatcher: CoroutineDispatcher = Dispatchers.IO,
+        methodName: String? = null,
         logError: String? = null,
         logSuccess: String? = null,
         onSuccess: ((value: T) -> Unit)? = null,
@@ -24,36 +23,51 @@ abstract class BaseViewModel<T : BaseEvent, V: BaseViewState>(defaultViewState: 
         block: suspend () -> T
     ) {
         viewModelScope.launch(dispatcher) {
-            safeCall(logSuccess, logError) {
+            safeCall(
+                methodName = methodName ?: block.javaClass.enclosingMethod?.name,
+                successLogs = logSuccess,
+                errorLogs = logError
+            ) {
                 block()
             }.fold(
-                onSuccess = { onSuccess?.invoke(it) },
-                onFailure = { onFailure?.invoke(it) }
+                onSuccess = { withContext(Dispatchers.Main.immediate) { onSuccess?.invoke(it) } },
+                onFailure = { withContext(Dispatchers.Main.immediate) { onFailure?.invoke(it) } }
             )
         }
     }
 
-    protected suspend fun <T> safeCall(
+    private suspend fun <T> safeCall(
+        methodName: String?,
         successLogs: String? = null,
         errorLogs: String? = null,
         call: suspend () -> T
     ): Result<T> {
         return try {
             val result = call.invoke()
-            Timber.d(successLogs)
+            (successLogs ?: "[${getOwnerNameForLogs()}: $methodName]").let {
+                Timber.tag(LOG_TAG).d("$it SUCCESS with result | $result |")
+            }
             Result.success(result)
         } catch (e: Exception) {
             if (e is CancellationException) {
                 throw e
             }
-            Timber.d("$errorLogs with $e")
+            (errorLogs ?: "[${getOwnerNameForLogs()}: $methodName]").let {
+                Timber.tag(LOG_TAG).d("$it FAILURE with | $e |")
+            }
             Result.failure(e)
         }
     }
 
 
+    open fun getOwnerNameForLogs(): String = this.javaClass.simpleName.replace("ViewModel", "VM")
+
     protected fun BaseViewState.logReduce(event: BaseEvent) {
         Timber.d("Reduce $this $event")
+    }
+
+    companion object {
+        private const val LOG_TAG = "COROUTINE"
     }
 
 }
