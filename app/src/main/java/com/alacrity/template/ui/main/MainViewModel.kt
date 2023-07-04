@@ -68,7 +68,7 @@ class MainViewModel @Inject constructor(
                 _viewState.update { FinishedLoading(response) }
             },
             onFailure = { exception ->
-                _viewState.update { Error(exception) }
+                _viewState.update { Error(exception, exception.message ?: "No message provided") }
             }
         ) {
             getSimpleResponseUseCase(param)

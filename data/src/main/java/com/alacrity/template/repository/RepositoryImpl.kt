@@ -19,10 +19,10 @@ class RepositoryImpl @Inject constructor(
                 return call.body
             }
             is NetworkResponse.ApiError -> {
-                throw TemplateException("Api error")
+                throw TemplateException("Server error, try again later")
             }
             is NetworkResponse.NetworkError -> {
-                throw TemplateException("Network error")
+                throw TemplateException("No network connection")
             }
             is NetworkResponse.UnknownError -> {
                 throw TemplateException("Unknown error")
