@@ -66,7 +66,6 @@ fun DependencyHandlerScope.room() {
 }
 
 fun DependencyHandlerScope.klaxon() {
-    implementation(Dependencies.other.klaxon)
     implementation(Dependencies.other.timber)
 }
 
